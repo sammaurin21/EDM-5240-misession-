@@ -1,0 +1,62 @@
+# coding: utf-8 
+
+#Ce script vise à référencer les produits Zara. 
+
+import csv 
+import requests 
+from bs4 import BeautifulSoup
+
+url = "http://www.zara.com/ca/fr/homme-c358523.html"
+
+fichier = "produitszara.csv"
+
+entetes = {
+    "User-Agent":"Samuel Maurin Bonte"
+   # "From":"sammaurin21@gmail.com" #affiche un message d'erreur 
+}
+
+
+contenu1 = requests.get(url, headers=entetes)
+
+page = BeautifulSoup(contenu1.text, "html.parser")
+
+
+f = open(fichier,"a")    
+final = csv.writer(f)
+final.writerow(["Nom produit","Prix","Url"])
+
+
+# for ligne in page.find_all("a"):
+   # print(ligne)
+   # print(page.find("a")["href"])
+
+
+i = 0 
+
+for section in page.find_all("a")[1:]:        # boucle 1 
+    # print(section["href"])
+    debut = "http://www.zara.com/ca/fr/"
+    hyperlien1 = debut + section["href"]
+    print(hyperlien1)
+    
+contenu2 = requests.get(hyperlien1, headers=entetes)
+page2 = BeautifulSoup(contenu2.text, "html.parser")
+
+e = 0
+
+
+# Je n'ai pas réussi à aller chercher le deuxième étage d'urls, les produits, qui amènent aux données recherchées.
+
+#for produit in page.find_all("a")[1:]: # boucle 2
+   # print(section["href"])
+
+
+
+
+
+        
+        
+
+    
+
+
